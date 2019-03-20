@@ -49,8 +49,8 @@ public class PilhaLL implements Pilha{
 		if(this.isEmpty())
 			throw new PilhaVaziaException("Lista vazia");
 		No aux = top;
-		aux.setProximo(null);
 		top = top.getProximo();
+		aux.setProximo(null);
 		total--;
 		return aux.getElemento();
 	}

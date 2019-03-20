@@ -44,8 +44,8 @@ public class FilaLL implements FilaInterface {
 		if(this.isEmpty())
 			throw new FilaVaziaException("Lista vazia");
 		No aux = inicio;
-		aux.setProximo(null);
 		inicio = inicio.getProximo();
+		aux.setProximo(null);
 		total--;
 		return aux.getElemento();
 	}

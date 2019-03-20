@@ -18,7 +18,7 @@ public class MainPLL {
 		System.out.println(pll.size());
 		pll.pop();
 		System.out.println(pll.size());
-		pll.pop();
+		//pll.pop();
 	}
 
 }
