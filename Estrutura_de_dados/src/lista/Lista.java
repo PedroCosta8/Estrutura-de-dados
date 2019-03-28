@@ -87,7 +87,7 @@ public class Lista implements ListaInterface{
 	public Posicao insertBefore(Posicao p, Object o) throws PosicaoInvalidaException {
 		No2 v = this.checarPosicao(p);
 		No2 n = new No2(o, v, v.getAnterior());
-		v.getProximo().setProximo(n);
+		v.getAnterior().setProximo(n);
 		v.setAnterior(n);
 		total++;
 		return n;
@@ -142,5 +142,16 @@ public class Lista implements ListaInterface{
 			throw new PosicaoInvalidaException("Posição inválida");
 		return aux;
 	}
-
+	
+	public String mostrarLista() throws PosicaoInvalidaException {
+		No2 e = header.getProximo();
+		String lista = "";
+		while(e != trailer) {
+			lista += String.valueOf(e.getElemento());
+			lista += " ";
+			e = e.getProximo();
+		}
+		lista += "|qtd: " + String.valueOf(total) + "|";
+		return lista;
+	}
 }
