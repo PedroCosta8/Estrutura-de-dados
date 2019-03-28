@@ -14,6 +14,8 @@ public class MainLista {
 		//No2 p = new No2(4,null,null);
 		Posicao p = lista.first();
 		lista.insertBefore(p, 99);
+		//Posicao s = (Posicao) new No2(99, null, null);
+		//lista.remove(s);
 		System.out.println(lista.mostrarLista());
 		System.out.println("-----");
 		p = lista.last();

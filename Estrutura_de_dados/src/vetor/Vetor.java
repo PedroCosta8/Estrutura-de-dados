@@ -76,7 +76,7 @@ public class Vetor implements VetorInterface{
 	}
 	
 	public int sizeArray() {
-		return vetor.length;
+		return this.vetor.length;
 	}
 
 }
