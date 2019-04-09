@@ -2,16 +2,14 @@ package pilha;
 
 import exceptions.PilhaVaziaException;
 
-public class Pilha implements PilhaInterface{
+public class PilhaLL implements PilhaInterface {
 	
-	private int top;
+	private No top;
 	private int total;
-	private Object[] pilha;
 	
-	public Pilha(int tam) {
-		top = -1;
+	public PilhaLL() {
+		top = null;
 		total = 0;
-		pilha = new Object[tam];
 	}
 
 	@Override
@@ -27,37 +25,42 @@ public class Pilha implements PilhaInterface{
 	@Override
 	public Object top() throws PilhaVaziaException {
 		if(this.isEmpty()) throw new PilhaVaziaException("pilha vazia");
-		return pilha[top];
+		return top.getElemento();
 	}
 
 	@Override
 	public void push(Object o) {
-		if(this.size() == pilha.length-1) {
-			Object[] aux = new Object[pilha.length*2];
-			for(int i = 0; i < pilha.length; i++)
-				aux[i] = pilha[i];
-			pilha = aux;
+		if(this.isEmpty()) {
+			No no = new No(o, null);
+			top = no;
+			total++;
 		}
-		pilha[++top] = o;
-		total++;
+		else {
+			No no = new No(o, top);
+			top = no;
+			total++;
+		}
 	}
 
 	@Override
 	public Object pop() throws PilhaVaziaException {
 		if(this.isEmpty()) throw new PilhaVaziaException("pilha vazia");
+		Object aux = top.getElemento();
+		top = top.getProximo();
 		total--;
-		return pilha[--top];
+		return aux;
 	}
 
 	@Override
 	public String mostrarPilha() {
 		String p = "";
-		for(int i = 0; i <= top; i++) {
-			p += pilha[i] + " "; 
+		No aux = top;
+		while(aux != null) {
+			p += aux.getElemento() + " ";
+			aux = aux.getProximo();
 		}
-		p += "|qtd: "+this.size() + "|";
+		p += "|qtd: "+ total + "|";
 		return p;
 	}
-	
 
 }

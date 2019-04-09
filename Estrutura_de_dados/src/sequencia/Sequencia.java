@@ -1,12 +1,11 @@
 package sequencia;
 
+import exceptions.ListaVaziaException;
+import exceptions.NoInvalidoException;
+import exceptions.RankInvalidoException;
 import lista.Lista;
 import lista.ListaInterface;
 import lista.No2;
-import lista.Posicao;
-import lista.exceptions.ListaVaziaException;
-import lista.exceptions.PosicaoInvalidaException;
-import vetor.exceptions.RankInvalidoException;
 
 public class Sequencia extends Lista implements ListaInterface{
 
@@ -32,122 +31,123 @@ public class Sequencia extends Lista implements ListaInterface{
 	}
 
 	@Override
-	public boolean isFirst(Posicao p) throws PosicaoInvalidaException {
-		No2 v = this.checarPosicao(p);
-		return (v.getAnterior() == header)?true:false;
+	public boolean isFirst(No2 no) throws ListaVaziaException, NoInvalidoException {
+		if(this.isEmpty()) throw new ListaVaziaException("lista vazia");
+		if(this.checarNo(no)) throw new NoInvalidoException("Nó inválido");
+		if(no == header.getProximo()) return true;
+		return false;
 	}
 
 	@Override
-	public boolean isLast(Posicao p) throws PosicaoInvalidaException {
-		No2 v = this.checarPosicao(p);
-		return (v.getProximo() == trailer)?true:false;
+	public boolean isLast(No2 no) throws ListaVaziaException, NoInvalidoException {
+		if(this.isEmpty()) throw new ListaVaziaException("lista vazia");
+		if(this.checarNo(no)) throw new NoInvalidoException("Nó inválido");
+		if(no == trailer.getAnterior()) return true;
+		return false;
 	}
 
 	@Override
-	public Posicao first() throws ListaVaziaException {
-		if(this.isEmpty())
-			throw new ListaVaziaException("Lista vazia");
+	public No2 first() throws ListaVaziaException {
 		return header.getProximo();
 	}
 
 	@Override
-	public Posicao last() throws ListaVaziaException {
-		if(this.isEmpty())
-			throw new ListaVaziaException("Lista vazia");
+	public No2 last() throws ListaVaziaException {
 		return trailer.getAnterior();
 	}
 
 	@Override
-	public Posicao before(Posicao p) throws PosicaoInvalidaException {
-		No2 v = this.checarPosicao(p);
-		No2 aux = v.getAnterior();
-		return aux;
+	public No2 before(No2 no) throws ListaVaziaException, NoInvalidoException {
+		if(this.isEmpty()) throw new ListaVaziaException("lista vazia");
+		if(this.checarNo(no)) throw new NoInvalidoException("Nó inválido");
+		return no.getAnterior();
 	}
 
 	@Override
-	public Posicao after(Posicao p) throws PosicaoInvalidaException {
-		No2 v = this.checarPosicao(p);
-		No2 aux = v.getProximo();
-		return aux;
+	public No2 after(No2 no) throws ListaVaziaException, NoInvalidoException {
+		if(this.isEmpty()) throw new ListaVaziaException("lista vazia");
+		if(this.checarNo(no)) throw new NoInvalidoException("Nó inválido");
+		return no.getProximo();
 	}
 
 	@Override
-	public Object replaceElement(Posicao p, Object o) throws PosicaoInvalidaException {
-		No2 v = this.checarPosicao(p);
-		Object old = v.getElemento();
-		v.setElemento(o);
+	public Object replaceElements(No2 no, Object o) throws ListaVaziaException, NoInvalidoException {
+		if(this.isEmpty()) throw new ListaVaziaException("lista vazia");
+		if(this.checarNo(no)) throw new NoInvalidoException("Nó inválido");
+		Object old = no.getElemento();
+		no.setElemento(o);
 		return old;
 	}
 
 	@Override
-	public void swapElements(Posicao a, Posicao b) throws PosicaoInvalidaException {
-		No2 v1 = this.checarPosicao(a);
-		No2 v2 = this.checarPosicao(b);
-		Object aux = v1.getElemento();
-		v1.setElemento(v2.getElemento());
-		v2.setElemento(aux);
+	public void swapElements(No2 no1, No2 no2) throws ListaVaziaException, NoInvalidoException {
+		if(this.isEmpty()) throw new ListaVaziaException("lista vazia");
+		if(this.checarNo(no1) && this.checarNo(no2)) throw new NoInvalidoException("Nó inválido");
+		Object aux = no1.getElemento();
+		no1.setElemento(no2.getElemento());
+		no2.setElemento(aux);
+		
 	}
 
 	@Override
-	public Posicao insertBefore(Posicao p, Object o) throws PosicaoInvalidaException {
-		No2 v = this.checarPosicao(p);
-		No2 n = new No2(o, v, v.getAnterior());
-		v.getAnterior().setProximo(n);
-		v.setAnterior(n);
+	public No2 insertBefore(No2 no, Object o) throws ListaVaziaException, NoInvalidoException {
+		if(this.isEmpty()) throw new ListaVaziaException("lista vazia");
+		if(this.checarNo(no)) throw new NoInvalidoException("Nó inválido");
+		No2 e = new No2(o, no, no.getAnterior());
+		no.getAnterior().setProximo(e);
+		no.setAnterior(e);
 		total++;
-		return n;
+		return e;
 	}
 
 	@Override
-	public Posicao insertAfter(Posicao p, Object o) throws PosicaoInvalidaException {
-		No2 v = this.checarPosicao(p);
-		No2 n = new No2(o, v.getProximo(), v);
-		v.getProximo().setAnterior(n);
-		v.setProximo(n);
+	public No2 insertAfter(No2 no, Object o) throws ListaVaziaException, NoInvalidoException {
+		if(this.isEmpty()) throw new ListaVaziaException("lista vazia");
+		if(this.checarNo(no)) throw new NoInvalidoException("Nó inválido");
+		No2 e = new No2(o, no.getProximo(), no);
+		no.getProximo().setAnterior(e);
+		no.setProximo(e);
 		total++;
-		return n;
+		return e;
 	}
 
 	@Override
-	public Posicao insertFirst(Object o) {
-		No2 n = new No2(o, header.getProximo(), header);
-		header.getProximo().setAnterior(n);
-		header.setProximo(n);
+	public void insertFirst(Object o) {
+		No2 e = new No2(o, header.getProximo(), header);
+		header.getProximo().setAnterior(e);
+		header.setProximo(e);
 		total++;
-		return n;
 	}
 
 	@Override
-	public Posicao insertLast(Object o) {
-		No2 n = new No2(o, trailer, trailer.getAnterior());
-		trailer.getAnterior().setProximo(n);
-		trailer.setAnterior(n);
+	public void insertLast(Object o) {
+		No2 e = new No2(o, trailer, trailer.getAnterior());
+		trailer.getAnterior().setProximo(e);
+		trailer.setAnterior(e);
 		total++;
-		return n;
 	}
 
 	@Override
-	public Object remove(Posicao p) throws PosicaoInvalidaException {
-		No2 v = this.checarPosicao(p);
-		No2 aux = v.getAnterior();
-		v.getProximo().setAnterior(aux);
-		aux.setProximo(v.getProximo());
-		Object r = v.getElemento();
-		v.setProximo(null);
-		v.setAnterior(null);
+	public Object remove(No2 no) throws ListaVaziaException, NoInvalidoException {
+		if(this.isEmpty()) throw new ListaVaziaException("lista vazia");
+		if(this.checarNo(no)) throw new NoInvalidoException("Nó inválido");
+		no.getAnterior().setProximo(no.getProximo());
+		no.getProximo().setAnterior(no.getAnterior());
+		Object aux = no.getElemento();
+		no.setAnterior(null);
+		no.setAnterior(null);
+		no.setElemento(null);
 		total--;
-		return r;
+		return aux;
 	}
-
-	public Object elementAtRank(int r) throws RankInvalidoException, PosicaoInvalidaException {
-		if(r < 0 || r > total)
-			throw new RankInvalidoException("Rank inválido");
+	
+	public Object elementAtRank(int r) throws RankInvalidoException{
+		if(r < 0 || r > total)throw new RankInvalidoException("Rank inválido");
 		if(r < total/2) {
 			No2 e = header.getProximo();
 			int i = 0;
 			while(i != r) {
 				e = e.getProximo();
-				this.checarPosicao(e);
 				i++;
 			}
 			return e.getElemento();
@@ -157,46 +157,36 @@ public class Sequencia extends Lista implements ListaInterface{
 			int i = total-1;
 			while(i != r) {
 				e = e.getAnterior();
-				this.checarPosicao(e);
 				i--;
 			}
 			return e.getElemento();
 		}
 	}
-
-	public Object replaceAtRank(int r, Object o) throws RankInvalidoException, PosicaoInvalidaException {
-		if(r < 0 || r > total)
-			throw new RankInvalidoException("Rank inválido");
+	
+	public void replaceAtRank(int r, Object o) throws RankInvalidoException{
+		if(r < 0 || r > total)throw new RankInvalidoException("Rank inválido");
 		if(r < total/2) {
 			No2 e = header.getProximo();
 			int i = 0;
 			while(i != r) {
 				e = e.getProximo();
-				this.checarPosicao(e);
 				i++;
 			}
-			Object old = e.getElemento();
 			e.setElemento(o);
-			return old;
 		}
 		else {
 			No2 e = trailer.getAnterior();
 			int i = total-1;
 			while(i != r) {
 				e = e.getAnterior();
-				this.checarPosicao(e);
 				i--;
 			}
-			Object old = e.getElemento();
 			e.setElemento(o);
-			return old;
 		}
 	}
-
-
+	
 	public void insertAtRank(int r, Object o) throws RankInvalidoException{
-		if(r < 0 || r > total)
-			throw new RankInvalidoException("Rank inválido");
+		if(r < 0 || r > total)throw new RankInvalidoException("Rank inválido");
 		No2 e = header.getProximo();
 		int i = 0;
 		while(i != r) {
@@ -206,10 +196,10 @@ public class Sequencia extends Lista implements ListaInterface{
 		No2 n = new No2(o, e, e.getAnterior());
 		e.getAnterior().setProximo(n);
 		e.setAnterior(n);
-		total++;	
+		total++;
 	}
-
-	public Object removeAtRank(int r) throws RankInvalidoException, PosicaoInvalidaException {
+	
+	public Object removeAtRank(int r) throws RankInvalidoException{
 		if(r < 0 || r > total)
 			throw new RankInvalidoException("Rank inválido");
 		if(r < total/2) {
@@ -217,7 +207,6 @@ public class Sequencia extends Lista implements ListaInterface{
 			int i = 0;
 			while(i != r) {
 				e = e.getProximo();
-				this.checarPosicao(e);
 				i++;
 			}
 			Object aux = e.getElemento();
@@ -233,7 +222,6 @@ public class Sequencia extends Lista implements ListaInterface{
 			int i = total-1;
 			while(i != r) {
 				e = e.getAnterior();
-				this.checarPosicao(e);
 				i--;
 			}
 			Object aux = e.getElemento();
@@ -246,7 +234,7 @@ public class Sequencia extends Lista implements ListaInterface{
 		}
 	}
 	
-	public Posicao atRank(int r) throws RankInvalidoException, PosicaoInvalidaException {
+	public No2 atRank(int r) throws RankInvalidoException{
 		if(r < 0 || r > total-1)
 			throw new RankInvalidoException("Rank inválido");
 		if(r < total/2) {
@@ -254,7 +242,6 @@ public class Sequencia extends Lista implements ListaInterface{
 			int i = 0;
 			while(i != r) {
 				e = e.getProximo();
-				this.checarPosicao(e);
 				i++;
 			}
 			return e;
@@ -270,36 +257,33 @@ public class Sequencia extends Lista implements ListaInterface{
 		}
 	}
 	
-	public int rankOf(Posicao p) throws PosicaoInvalidaException{
+	public int rankOf(No2 no) throws NoInvalidoException{
+		if(this.checarNo(no)) throw new NoInvalidoException("Nó inválido");
 		No2 i = header.getProximo();
-		No2 p2 = this.checarPosicao(p);
 		int r = 0;
-		while(i != p2 && i != trailer) {
+		while(i != no && i != trailer) {
 			i = i.getProximo();
 			r++;
 		}
 		return r;
 	}
-	
-	private No2 checarPosicao(Posicao p) throws PosicaoInvalidaException {	
-		if(p == null || p == header || p == trailer)
-			throw new PosicaoInvalidaException("Posição inválida");
-		No2 aux = (No2)p;
-		if((aux.getAnterior() == null) || (aux.getProximo() == null))
-			throw new PosicaoInvalidaException("Posição inválida");
-		return aux;
+
+	@Override
+	public String mostrarLista() {
+		String l = "";
+		No2 aux = header.getProximo();
+		while(aux != trailer) {
+			l += aux.getElemento() + " ";
+			aux = aux.getProximo();
+		}
+		l += "|qtd: " + this.size() + "|";
+		return l;
 	}
 	
-	public String mostrarLista() throws PosicaoInvalidaException {
-		No2 e = header.getProximo();
-		String lista = "";
-		while(e != trailer) {
-			lista += String.valueOf(e.getElemento());
-			lista += " ";
-			e = e.getProximo();
-		}
-		lista += "|qtd: " + String.valueOf(total) + "|";
-		return lista;
+	private boolean checarNo(No2 no) {
+		if(no == null || no == header || no == header) return true;
+		else return false;
+		
 	}
 
 }

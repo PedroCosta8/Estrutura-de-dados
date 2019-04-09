@@ -1,27 +1,15 @@
 package lista;
 
-import lista.exceptions.PosicaoInvalidaException;
-
-public class No2  implements Posicao{
+public class No2{
 	
+	private No2 proximo;
+	private No2 anterior;
 	private Object elemento;
-	private No2 proximo, anterior;
 	
 	public No2(Object elemento, No2 proximo, No2 anterior) {
 		this.setElemento(elemento);
 		this.setProximo(proximo);
 		this.setAnterior(anterior);
-	}
-	
-	@Override
-	public Object getElemento() throws PosicaoInvalidaException {
-		if((proximo == null) && (anterior == null))
-			throw new PosicaoInvalidaException("Posição Inválida");
-		return elemento;
-	}
-
-	public void setElemento(Object elemento) {
-		this.elemento = elemento;
 	}
 
 	public No2 getProximo() {
@@ -40,4 +28,14 @@ public class No2  implements Posicao{
 		this.anterior = anterior;
 	}
 
+	public Object getElemento() {
+		return elemento;
+	}
+
+	public void setElemento(Object elemento) {
+		this.elemento = elemento;
+	}
+	
+	
+	
 }

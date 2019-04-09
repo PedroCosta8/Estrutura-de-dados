@@ -1,13 +1,12 @@
 package sequencia;
 
-import lista.exceptions.ListaVaziaException;
-import lista.exceptions.PosicaoInvalidaException;
-import vetor.exceptions.RankInvalidoException;
+import exceptions.ListaVaziaException;
+import exceptions.NoInvalidoException;
+import exceptions.RankInvalidoException;
 
 public class MainSequencia {
 
-	public static void main(String[] args) throws RankInvalidoException, PosicaoInvalidaException, ListaVaziaException {
-		
+	public static void main(String[] args) throws RankInvalidoException, NoInvalidoException, ListaVaziaException {
 		Sequencia sequencia = new Sequencia();
 		sequencia.insertAtRank(0, 11);
 		System.out.println(sequencia.mostrarLista());
@@ -27,7 +26,7 @@ public class MainSequencia {
 		sequencia.replaceAtRank(3,100);
 		System.out.println(sequencia.mostrarLista());
 		System.out.println(sequencia.rankOf(sequencia.last()));
-	
+
 	}
 
 }
