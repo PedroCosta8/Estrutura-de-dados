@@ -112,19 +112,6 @@ public class Arvore implements ArvoreInterface{
 		return s;
 	}
 	
-	public String mostraArvore2(Node r) {
-		String s = r.element().toString();
-		for(Node w : r.children()) {
-			s += "\n"+ (repeteChar("  ", this.depth(w))) + w.element();
-			if(this.isInternal(w)) {
-				for(Node i : w.children()) {
-					s += "\n"+ (repeteChar("  ", this.depth(i))) + i.element();
-				}
-			}
-		}
-		
-		return s;
-	}
 	
 	private String repeteChar(String c, int num) {
 		String aux = c;
