@@ -18,9 +18,13 @@ public class ArvoreBinaria{
 	}
 
 	public int height(Node no) {
-		if(this.isExternal(no)) return 0;
-		int h = 0;
-		return 0;
+		if(no == null) {
+		System.out.println("visita");
+			return -1;
+		}
+		else {
+			return 1 + Math.max(height(no.getEsquerdo()), height(no.getDireito()));
+		}
 	}
 
 	public boolean isEmpty() {
@@ -62,13 +66,12 @@ public class ArvoreBinaria{
 	}
 
 	public boolean isRoot(Node no) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public int depth(Node no) {
-		// TODO Auto-generated method stub
-		return 0;
+		if(this.isRoot(no)) return 0;
+		else return 1 + depth(no.getEsquerdo());
 	}
 
 	public Object replace(Node no, Object o) {

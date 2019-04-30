@@ -12,6 +12,7 @@ public class MainArvoreBP {
 		//bt.preOrder(bt.root());
 		bt.add(bt.root(), 2);
 		bt.preOrder(bt.root());
+		System.out.println("altura: "+ bt.height(bt.root()));
 	}
 
 }
