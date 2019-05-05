@@ -7,10 +7,16 @@ public class ArvoreBinaria{
 	
 	private Node raiz;
 	private int tamanho;
+	private ArrayList<Node> listaPreOrder, listaInOrder, listaPosOrder;
 	
 	public ArvoreBinaria() {
 		raiz = null;	
 		tamanho = 0;
+	}
+	
+	public ArvoreBinaria(Node raiz) {
+		this.raiz = raiz;
+		tamanho = 1;
 	}
 
 	public int size() {
@@ -18,18 +24,21 @@ public class ArvoreBinaria{
 	}
 
 	public int height(Node no) {
-		if(no == null) {
-		System.out.println("visita");
-			return -1;
+		if(no == null || this.isExternal(no)) {
+			return 0;
 		}
 		else {
-			return 1 + Math.max(height(no.getEsquerdo()), height(no.getDireito()));
+			int left = height(no.getEsquerdo());
+			int right = height(no.getDireito());
+			if (left > right) {
+				return left + 1;
+			}
+			return right + 1;
 		}
 	}
 
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return (raiz == null)?true:false;
 	}
 
 	public ArrayList<Object> elements() {
@@ -52,13 +61,14 @@ public class ArvoreBinaria{
 	}
 
 	public ArrayList<Node> children(Node pai) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Node> filhos = new ArrayList<Node>();
+		filhos.add(pai.getEsquerdo());
+		filhos.add(pai.getEsquerdo());
+		return filhos;
 	}
 
 	public boolean isInternal(Node no) {
-		// TODO Auto-generated method stub
-		return false;
+		return (!this.isExternal(no))?true:false;
 	}
 
 	public boolean isExternal(Node no) {
@@ -66,12 +76,13 @@ public class ArvoreBinaria{
 	}
 
 	public boolean isRoot(Node no) {
-		return false;
+		return (no != raiz)?false:true;
 	}
 
 	public int depth(Node no) {
+		if(no == null) return -1;
 		if(this.isRoot(no)) return 0;
-		else return 1 + depth(no.getEsquerdo());
+		else return 1 + depth(no.getPai());
 	}
 
 	public Object replace(Node no, Object o) {
@@ -79,14 +90,14 @@ public class ArvoreBinaria{
 		return null;
 	}
 
-	public void add(Node no, int valor) {
+	public void insert(Node no, int valor) {
 		if(raiz == null) {
 			raiz =  new Node(valor, null, null, null);
 		}
 		else {
 			if(valor < no.getElemento()) {
 				if(no.getEsquerdo() != null) {
-					add(no.getEsquerdo(), valor);
+					insert(no.getEsquerdo(), valor);
 				}
 				else {
 					Node novo = new Node(valor,no, null, null);
@@ -95,7 +106,7 @@ public class ArvoreBinaria{
 			}
 			else {
 				if(no.getDireito() != null) {
-					add(no.getDireito(), valor);
+					insert(no.getDireito(), valor);
 				}
 				else {
 					Node novo = new Node(valor,no, null, null);
@@ -110,34 +121,81 @@ public class ArvoreBinaria{
 		return null;
 	}
 	
-	public void preOrder(Node no) {
-		System.out.print(no.getElemento() + " ");
+	public ArrayList<Node> preOrder(Node no, boolean visitado) {
+		if(!visitado) {
+			listaPreOrder = new ArrayList<Node>();
+		}
+		listaPreOrder.add(no);
 		if(no.getEsquerdo() != null) {
-			preOrder(no.getEsquerdo());
+			preOrder(no.getEsquerdo(), true);
 		}
 		if(no.getDireito() != null) {
-			preOrder(no.getDireito());
+			preOrder(no.getDireito(), true);
 		}
+		return listaPreOrder;
 	}
 
-	public void inOrder(Node no) {
+	public ArrayList<Node> inOrder(Node no, boolean visitado) {
+		if(!visitado) {
+			listaInOrder = new ArrayList<Node>();
+		}
 		if(no.getEsquerdo() != null) {
-			inOrder(no.getEsquerdo());
+			inOrder(no.getEsquerdo(), true);
 		}
-		System.out.println(no.getElemento() + " ");
+		listaInOrder.add(no);
 		if(no.getDireito() != null) {
-			inOrder(no.getDireito());
+			inOrder(no.getDireito(), true);
 		}
+		return listaInOrder;
 	}
 	
-	public void posOrder(Node no) {
+	public ArrayList<Node> posOrder(Node no, boolean visitado) {
+		if(!visitado) {
+			listaPosOrder = new ArrayList<Node>();
+		}
 		if(no.getEsquerdo() != null) {
-			inOrder(no.getEsquerdo());
+			inOrder(no.getEsquerdo(), true);
 		}
 		if(no.getDireito() != null) {
-			inOrder(no.getDireito());
+			inOrder(no.getDireito(), true);
 		}
-		System.out.println(no.getElemento() + " ");
+		listaPosOrder.add(no);
+		return listaPosOrder;
+	}
+	
+	public String mostraArvore() {
+		String arvoreCompleta = "";
+		
+		ArrayList<Node> tmpList = this.inOrder(this.raiz, false);
+		
+		int largura = tmpList.size();
+		int altura = this.height(this.raiz);
+		
+		String[][] arvore = new String[altura+1][largura];
+		
+		Node no = null;
+		int l = 0;
+		
+		for(int i=0; i<largura; i++) {
+			no = tmpList.get(i);
+			l = this.depth(no);
+			
+			arvore[l][i] = String.valueOf(no.getElemento());
+		}
+		
+		for(int i=0; i<altura+1; i++) {
+			for(int j=0; j<largura; j++) {
+				if(arvore[i][j] == null) {
+					arvoreCompleta += " ";
+				}
+				else {
+					
+					arvoreCompleta += arvore[i][j]+" ";
+				}
+			}
+			arvoreCompleta += "\n";
+		}
+		return arvoreCompleta;
 	}
 
 }
