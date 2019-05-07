@@ -76,7 +76,7 @@ public class ArvoreBinaria{
 			filhos.add(pai.getEsquerdo());
 		}
 		if(pai.getDireito() != null) {
-			filhos.add(pai.getEsquerdo());
+			filhos.add(pai.getDireito());
 		}
 		return filhos;
 	}

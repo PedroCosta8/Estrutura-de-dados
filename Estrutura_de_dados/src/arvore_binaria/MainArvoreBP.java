@@ -18,12 +18,12 @@ public class MainArvoreBP {
 		System.out.println(bt.mostraArvore());
 		//bt.replace(bt.root().getDireito(), 5000);
 		//System.out.println(bt.mostraArvore());
-		bt.remove(bt.search(15, bt.root()));
-		System.out.println(bt.mostraArvore());
-		bt.remove(bt.search(32, bt.root()));
-		System.out.println(bt.mostraArvore());
-		bt.remove(bt.search(1000, bt.root()));
-		System.out.println(bt.mostraArvore());
+//		bt.remove(bt.search(15, bt.root()));
+//		System.out.println(bt.mostraArvore());
+//		bt.remove(bt.search(32, bt.root()));
+//		System.out.println(bt.mostraArvore());
+//		bt.remove(bt.search(1000, bt.root()));
+//		System.out.println(bt.mostraArvore());
 	}
 
 }
