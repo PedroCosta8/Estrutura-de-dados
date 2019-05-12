@@ -33,42 +33,53 @@ public class MainMapa {
 ////		}
 		//////////////////// mapa linear probing ///////////////////////
 		
-//		MapaLP maplp = new MapaLP(2);
-//		
-//		maplp.insert(18, 777);
-//		maplp.insert(44, "h");
-//		System.out.println(maplp.size());
-//		maplp.insert(33, 23);
-//		System.out.println(maplp.size());
-//		maplp.insert(13, 43);
-//		//System.out.println(maplp.size());
-//		//maplp.insert(0, 123);
-//		
-////		int e = maplp.vetor().length;
-////		System.out.println(e);
-//		for(Object x : maplp.elements()) {
-//			System.out.print(x + " ");
-//		}
-//		System.out.println();
-//		Item[] e = maplp.vetor();
-//		for(int i = 0; i < e.length; i++) {
-//			System.out.print(e[i]+ " ");
-//		}
-//		
-//		
-//		System.out.println();
-//		
-//		System.out.println(maplp.find(44).getValor());
-//		maplp.remove(44);
-//		e = maplp.vetor();
-//		for(int i = 0; i < e.length; i++) {
-//			System.out.print(e[i]+ " ");
-//		}
-//		System.out.println();
-//		System.out.println(maplp.size());
-//		for(Object x : maplp.elements()) {
-//			System.out.print(x + " ");
-//		}
+		MapaLP maplp = new MapaLP(2);
+		
+		maplp.insert(18, 777);
+		maplp.insert(44, "h");
+		System.out.println(maplp.size());
+		maplp.insert(33, 23);
+		System.out.println(maplp.size());
+		maplp.insert(13, 43);
+		//System.out.println(maplp.size());
+		//maplp.insert(0, 123);
+		
+//		int e = maplp.vetor().length;
+//		System.out.println(e);
+		for(Object x : maplp.elements()) {
+			System.out.print(x + " ");
+		}
+		System.out.println();
+		Item[] e = maplp.vetor();
+		for(int i = 0; i < e.length; i++) {
+			System.out.print(e[i]+ " ");
+		}
+		
+		
+		System.out.println();
+		
+		System.out.println(maplp.find(44).getValor());
+		maplp.remove(44);
+		e = maplp.vetor();
+		for(int i = 0; i < e.length; i++) {
+			System.out.print(e[i]+ " ");
+		}
+		System.out.println();
+		System.out.println(maplp.size());
+		for(Object x : maplp.elements()) {
+			System.out.print(x + " ");
+		}
+		System.out.println();
+		maplp.insert(8, "oito");
+		e = maplp.vetor();
+		for(int i = 0; i < e.length; i++) {
+			System.out.print(e[i]+ " ");
+		}
+		System.out.println();
+		System.out.println(maplp.size());
+		for(Object x : maplp.elements()) {
+			System.out.print(x + " ");
+		}
 		//System.out.println(maplp.find(44).getValor());
 	}
 

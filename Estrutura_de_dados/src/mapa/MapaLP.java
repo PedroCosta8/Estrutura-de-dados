@@ -51,7 +51,11 @@ public class MapaLP implements MapaInterface{
 		if(this.size() == mapa.length-1) {
 			Item[] novoMapa = new Item[mapa.length*2];
 			for(int i = 0; i < mapa.length; i++) {
-				novoMapa[i] = mapa[i]; 
+				int hash = i;
+				if(mapa[i] != null) {
+					hash = mapa[i].getChave()%novoMapa.length; //faz o hashing novamente no novo array
+				}
+				novoMapa[hash] = mapa[i]; 
 			}
 			mapa = novoMapa;
 		}
