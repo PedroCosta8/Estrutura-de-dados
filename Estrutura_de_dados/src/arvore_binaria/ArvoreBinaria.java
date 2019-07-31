@@ -29,8 +29,8 @@ public class ArvoreBinaria{
 			return 0;
 		}
 		else {
-			int left = height(no.getEsquerdo());
-			int right = height(no.getDireito());
+			int left = height(no.getFilhoEsquerdo());
+			int right = height(no.getFilhoDireito());
 			if (left > right) {
 				return left + 1;
 			}
@@ -72,11 +72,11 @@ public class ArvoreBinaria{
 
 	public ArrayList<Node> children(Node pai) {
 		ArrayList<Node> filhos = new ArrayList<Node>();
-		if(pai.getEsquerdo() != null) {
-			filhos.add(pai.getEsquerdo());
+		if(pai.getFilhoEsquerdo() != null) {
+			filhos.add(pai.getFilhoEsquerdo());
 		}
-		if(pai.getDireito() != null) {
-			filhos.add(pai.getDireito());
+		if(pai.getFilhoDireito() != null) {
+			filhos.add(pai.getFilhoDireito());
 		}
 		return filhos;
 	}
@@ -86,7 +86,7 @@ public class ArvoreBinaria{
 	}
 
 	public boolean isExternal(Node no) {
-		return (no.getEsquerdo() == null && no.getDireito() == null)?true:false;
+		return (no.getFilhoEsquerdo() == null && no.getFilhoDireito() == null)?true:false;
 	}
 
 	public boolean isRoot(Node no) {
@@ -117,21 +117,21 @@ public class ArvoreBinaria{
 		}
 		else {
 			if(valor < no.getElemento()) {
-				if(no.getEsquerdo() != null) {
-					insert(no.getEsquerdo(), valor);
+				if(no.getFilhoEsquerdo() != null) {
+					insert(no.getFilhoEsquerdo(), valor);
 				}
 				else {
 					Node novo = new Node(valor,no, null, null);
-					no.setEsquerdo(novo);
+					no.setFilhoEsquerdo(novo);
 				}
 			}
 			else {
-				if(no.getDireito() != null) {
-					insert(no.getDireito(), valor);
+				if(no.getFilhoDireito() != null) {
+					insert(no.getFilhoDireito(), valor);
 				}
 				else {
 					Node novo = new Node(valor,no, null, null);
-					no.setDireito(novo);
+					no.setFilhoDireito(novo);
 				}
 			}
 		}
@@ -142,11 +142,11 @@ public class ArvoreBinaria{
 		//folha
 		if(this.isExternal(no)) {
 			valor = no.getElemento();
-			if(no.getPai().getEsquerdo() == no) {
-				no.getPai().setEsquerdo(null);
+			if(no.getPai().getFilhoEsquerdo() == no) {
+				no.getPai().setFilhoEsquerdo(null);
 			}
 			else {
-				no.getPai().setDireito(null);
+				no.getPai().setFilhoDireito(null);
 			}
 		}
 		else {
@@ -154,34 +154,38 @@ public class ArvoreBinaria{
 			//1 filho
 			if(qtdF == 1) {
 				valor = no.getElemento();
-				if(no.getPai().getDireito() == no) { //eh o filho direito do pai
-					if(no.getEsquerdo() != null) { //so tem filho na esquerda
-						no.getPai().setDireito(no.getEsquerdo());
-						no.getEsquerdo().setPai(no.getPai());
+				if(no.getPai().getFilhoDireito() == no) { //eh o filho direito do pai
+					if(no.getFilhoEsquerdo() != null) { //so tem filho na esquerda
+						no.getPai().setFilhoDireito(no.getFilhoEsquerdo());
+						no.getFilhoEsquerdo().setPai(no.getPai());
+						no.clear();
 					}
 					else { //so tem filho na direita
-						no.getPai().setDireito(no.getDireito());
-						no.getDireito().setPai(no.getPai());
+						no.getPai().setFilhoDireito(no.getFilhoDireito());
+						no.getFilhoDireito().setPai(no.getPai());
+						no.clear();
 					}
 				}
 				else {
-					if(no.getEsquerdo() != null) { //so tem filho na esquerda
-						no.getPai().setEsquerdo(no.getEsquerdo());
-						no.getEsquerdo().setPai(no.getPai());
+					if(no.getFilhoEsquerdo() != null) { //so tem filho na esquerda
+						no.getPai().setFilhoEsquerdo(no.getFilhoEsquerdo());
+						no.getFilhoEsquerdo().setPai(no.getPai());
+						no.clear();
 					}
 					else { //so tem filho na direita
-						no.getPai().setEsquerdo(no.getDireito());
-						no.getDireito().setPai(no.getPai());
+						no.getPai().setFilhoEsquerdo(no.getFilhoDireito());
+						no.getFilhoDireito().setPai(no.getPai());
+						no.clear();
 					}
 				}
 			}
 			else { //2 filhos
 				valor = no.getElemento();
-				Node aux = no.getEsquerdo();
+				Node aux = no.getFilhoDireito();
 				Node sub = null; //o substituto do nó que sera removido
 				while(aux != null) {
-					sub = aux; //nó mais a direita da sub-arvore esquerda
-					aux = aux.getDireito();
+					sub = aux; //nó mais a esquerda da sub-arvore direita
+					aux = aux.getFilhoEsquerdo();
 				}
 				no.setElemento(sub.getElemento());
 				this.remove(sub);
@@ -195,11 +199,11 @@ public class ArvoreBinaria{
 			listaPreOrder = new ArrayList<Node>();
 		}
 		listaPreOrder.add(no);
-		if(no.getEsquerdo() != null) {
-			preOrder(no.getEsquerdo(), true);
+		if(no.getFilhoEsquerdo() != null) {
+			preOrder(no.getFilhoEsquerdo(), true);
 		}
-		if(no.getDireito() != null) {
-			preOrder(no.getDireito(), true);
+		if(no.getFilhoDireito() != null) {
+			preOrder(no.getFilhoDireito(), true);
 		}
 		return listaPreOrder;
 	}
@@ -208,12 +212,12 @@ public class ArvoreBinaria{
 		if(!visitado) {
 			listaInOrder = new ArrayList<Node>();
 		}
-		if(no.getEsquerdo() != null) {
-			inOrder(no.getEsquerdo(), true);
+		if(no.getFilhoEsquerdo() != null) {
+			inOrder(no.getFilhoEsquerdo(), true);
 		}
 		listaInOrder.add(no);
-		if(no.getDireito() != null) {
-			inOrder(no.getDireito(), true);
+		if(no.getFilhoDireito() != null) {
+			inOrder(no.getFilhoDireito(), true);
 		}
 		return listaInOrder;
 	}
@@ -222,11 +226,11 @@ public class ArvoreBinaria{
 		if(!visitado) {
 			listaPosOrder = new ArrayList<Node>();
 		}
-		if(no.getEsquerdo() != null) {
-			posOrder(no.getEsquerdo(), true);
+		if(no.getFilhoEsquerdo() != null) {
+			posOrder(no.getFilhoEsquerdo(), true);
 		}
-		if(no.getDireito() != null) {
-			posOrder(no.getDireito(), true);
+		if(no.getFilhoDireito() != null) {
+			posOrder(no.getFilhoDireito(), true);
 		}
 		listaPosOrder.add(no);
 		if(!visitado) {
@@ -276,29 +280,29 @@ public class ArvoreBinaria{
 			return no;
 		}
 		if(valor < no.getElemento()) {
-			aux = this.search(valor, no.getEsquerdo());
+			aux = this.search(valor, no.getFilhoEsquerdo());
 		}
 		if(valor > no.getElemento()) {
-			aux =this.search(valor, no.getDireito());
+			aux =this.search(valor, no.getFilhoDireito());
 		}
 		no = aux;
 		return no;
 	}
 	
 	public Node leftChild(Node no) {
-		return no.getEsquerdo();
+		return no.getFilhoEsquerdo();
 	}
 	
 	public Node rightChild(Node no) {
-		return no.getDireito();
+		return no.getFilhoDireito();
 	}
 	
 	public boolean hasLeftChild(Node no) {
-		return (no.getEsquerdo() != null)?true:false;
+		return (no.getFilhoEsquerdo() != null)?true:false;
 	}
 	
 	public boolean hasRightChild(Node no) {
-		return (no.getDireito() != null)?true:false;
+		return (no.getFilhoDireito() != null)?true:false;
 	}
 	
 	

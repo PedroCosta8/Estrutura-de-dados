@@ -15,8 +15,11 @@ public class MainArvoreBP {
 		bt.insert(bt.root(), 16);
 		bt.insert(bt.root(), 12);
 		bt.insert(bt.root(), 2000);
+		bt.remove(bt.search(1000, bt.root()));
+		bt.remove(bt.search(2000, bt.root()));
+		bt.remove(bt.search(15, bt.root()));
 		System.out.println(bt.mostraArvore());
-		//bt.replace(bt.root().getDireito(), 5000);
+		//bt.replace(bt.root().getFilhoDireito(), 5000);
 		//System.out.println(bt.mostraArvore());
 //		bt.remove(bt.search(15, bt.root()));
 //		System.out.println(bt.mostraArvore());

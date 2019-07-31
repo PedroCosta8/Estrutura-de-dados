@@ -8,8 +8,8 @@ public class Node {
 	public Node(int elemento, Node pai, Node esquerdo, Node direito) {
 		this.setElemento(elemento);
 		this.setPai(pai);
-		this.setEsquerdo(esquerdo);
-		this.setDireito(direito);
+		this.setFilhoEsquerdo(esquerdo);
+		this.setFilhoDireito(direito);
 	}
 
 	public int getElemento() {
@@ -28,20 +28,26 @@ public class Node {
 		this.pai = pai;
 	}
 
-	public Node getEsquerdo() {
+	public Node getFilhoEsquerdo() {
 		return esquerdo;
 	}
 
-	public void setEsquerdo(Node esquerdo) {
+	public void setFilhoEsquerdo(Node esquerdo) {
 		this.esquerdo = esquerdo;
 	}
 
-	public Node getDireito() {
+	public Node getFilhoDireito() {
 		return direito;
 	}
 
-	public void setDireito(Node direito) {
+	public void setFilhoDireito(Node direito) {
 		this.direito = direito;
+	}
+
+	public void clear() {
+		this.setPai(null);
+		this.setFilhoEsquerdo(null);
+		this.setFilhoDireito(null);
 	}
 	
 	
